@@ -12,11 +12,11 @@ pipeline {
             '''
       }
     }
-    /*
+    
     stage ('Check-Git-Secrets') {
       steps {
         sh 'rm trufflehog || true'
-        sh 'docker run gesellix/trufflehog --json https://github.com/Hazraf/enote.git > trufflehog'
+        sh 'docker run gesellix/trufflehog --json https://github.com/Hazraf/YogaSystem.git > trufflehog'
         sh 'cat trufflehog'
       }
     }
@@ -24,7 +24,7 @@ pipeline {
     stage ('Source Composition Analysis') {
       steps {
          sh 'rm owasp* || true'
-         sh 'wget "https://raw.githubusercontent.com/Hazraf/enote/ENOTES-1/owasp-dependency-check.sh" '
+         sh 'wget "https://raw.githubusercontent.com/Hazraf/YogaSystem/master/owasp-dependency-check.sh" '
          sh 'chmod +x owasp-dependency-check.sh'
          sh 'bash owasp-dependency-check.sh'
          sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
@@ -40,7 +40,7 @@ pipeline {
         }
       }
     }
-    */
+    
     stage ('Build') {
       steps {
       sh 'mvn clean package'
@@ -52,11 +52,11 @@ pipeline {
                 sh 'cp target/*.war /prod/apache-tomcat-8.5.61/webapps/webapp.war'     
            }       
     }
-    /*
+  
     stage ('DAST') {
       steps {
-         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@13.232.158.44 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://13.232.202.25:8080/webapp/" || true'
+         sh '"docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8082/webapp/" || true'
       }
-    } */
+    }
   }
 }
