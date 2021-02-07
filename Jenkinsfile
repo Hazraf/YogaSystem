@@ -53,7 +53,8 @@ pipeline {
   
     stage ('DAST') {
       steps {
-         sh '"docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8082/webapp/home" || true'
+         sh '"docker pull owasp/zap2docker-stable" || true'
+         sh '"docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8082/webapp/" || true'
       }
     }
   }
