@@ -38,7 +38,7 @@ pipeline {
         }
       }
     }
-    */
+    
     stage ('Build') {
       steps {
       sh 'mvn clean package'
@@ -50,10 +50,10 @@ pipeline {
                 sh 'cp target/*.war /prod/apache-tomcat-8.5.61/webapps/webapp.war'     
            }       
     }
-  
+    */
     stage ('DAST') {
       steps {
-         sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8082/webapp/'
+         sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8082/webapp/home'
       }
     }
   }
